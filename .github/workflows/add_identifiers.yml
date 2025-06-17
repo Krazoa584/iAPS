@@ -22,11 +22,15 @@ jobs:
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
         
-      # Install project dependencies
+           # Install project dependencies
       - name: Install Project Dependencies
         run: bundle install
 
-      # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
+      # Update Fastlane to fix capability error
+      - name: Update Fastlane
+        run: bundle update fastlane
+
+      # Sync the GitHub runner clock with the Windows time server
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
