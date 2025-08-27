@@ -135,20 +135,11 @@ jobs:
       - name: Install project dependencies
         run: bundle install
 
-      # >>> Neu: Xcode 16 auswählen (so wie dein Log es nutzt)
-      - name: Select Xcode 16
-        run: sudo xcode-select -s /Applications/Xcode_16.app
+      # >>> Wechsel auf Xcode 15.4 (enthält iOS 17.5 SDK)
+      - name: Select Xcode 15.4
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
 
-      # >>> Neu: Xcode initialisieren (erforderlich für downloadPlatform)
-      - name: Xcode first launch tasks
-        run: |
-          sudo xcodebuild -license accept
-          sudo xcodebuild -runFirstLaunch
-
-      # >>> Neu: iOS-Plattform (iOS 18 SDK) sicherstellen
-      - name: Ensure iOS Platform is installed
-        run: |
-          sudo xcodebuild -downloadPlatform iOS
+      # (Kein downloadPlatform nötig – iOS 17.5 SDK ist vorinstalliert)
 
       # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
