@@ -1,4 +1,4 @@
-name: 3. Create Certificates 
+name: 3. Create Certificates
 run-name: Create Certificates (${{ github.ref_name }})
 on:
   workflow_dispatch:
@@ -27,24 +27,9 @@ jobs:
       - name: Install Project Dependencies
         run: bundle install
 
-      # (Optional, aber hilfreich) Fastlane auf neuesten Stand
-      - name: Update Fastlane (optional but recommended)
-        run: bundle update fastlane
-
       # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
-
-      # <<< NUR EINMAL AUSFÜHREN: räumt alte, ungültige Zertifikate/Profiles auf
-      - name: Match Nuke (App Store) — ONE TIME ONLY
-        run: bundle exec fastlane match nuke appstore --skip_confirmation true
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
 
       # Create or update certificates for app
       - name: Create Certificates
@@ -57,7 +42,4 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
 
-          # <<< WICHTIG: erlaubt Schreiben/Neu-Erstellen/ Aufräumen
-          MATCH_READONLY: "false"
-          MATCH_FORCE_FOR_NEW_CERTIFICATES: "true"
-          MATCH_SAFE_REMOVE_CERTS: "true"
+
