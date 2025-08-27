@@ -35,18 +35,6 @@ jobs:
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
-      # ONE TIME ONLY: räumt alte/verwaiste Zertifikate & Profiles auf
-      - name: Match Nuke (App Store) — ONE TIME ONLY
-        run: bundle exec fastlane run match_nuke type:appstore skip_confirmation:true safe_remove_certs:true
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_READONLY: "false"
-
       # Create or update certificates for app
       - name: Create Certificates
         run: bundle exec fastlane certs
@@ -57,6 +45,8 @@ jobs:
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+
+          # Wichtig: readonly AUS, neu erstellen & aufräumen ERLAUBEN
           MATCH_READONLY: "false"
           MATCH_FORCE_FOR_NEW_CERTIFICATES: "true"
           MATCH_SAFE_REMOVE_CERTS: "true"
