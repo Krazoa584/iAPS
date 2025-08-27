@@ -41,3 +41,7 @@ jobs:
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          MATCH_READONLY: "false"                 # überschreibt setup_ci (readonly aus)
+          MATCH_FORCE_FOR_NEW_CERTIFICATES: "true"# erzwingt neues Zertifikat
+          MATCH_SAFE_REMOVE_CERTS: "true"         # räumt verwaiste Einträge sicher auf
+
